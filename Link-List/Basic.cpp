@@ -19,13 +19,36 @@ void insert(struct Node** head, int x, int p){
 	
 	struct Node *temp = *head;
 	
-	for(i=0;i<=(p-1);i++){
+	for(int i=0;i<=(p-1);i++){
 		temp = temp->next;
 	}
 	
 	newNode -> data = x;
 	newNode -> next = temp->next;
 	temp->next = newNode;
+}
+
+void deleteNode(struct Node** head, int key){
+	struct Node *temp,*prev;
+	temp = *head;
+	
+	if(temp->next !=NULL && temp->data ==key){
+		*head = temp->next;
+		free(temp);
+		return;
+	}
+	
+	while(temp != NULL && temp->data !=key){
+		prev = temp;
+		temp = temp->next;
+	}
+	
+	if(temp == NULL){
+		return;
+	}
+	
+	prev->next = temp->next;
+	free(temp);
 }
 
 void print(struct Node *node){
@@ -40,6 +63,9 @@ int main() {
 	
 	push(&head, 2);
 	push(&head, 3);
+	push(&head, 4);
+	print(head);
+	deleteNode(&head, 3);
 	print(head);
 	return 0;
 }
