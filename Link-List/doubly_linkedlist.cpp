@@ -37,6 +37,28 @@ void insertAtEnd(struct Node** head, int x){
 	newNode -> prev = last;
 }
 
+void insertAtPosition(struct Node** head, int x, int pos){
+	struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+	struct Node *temp = *head;
+	
+	newNode -> data = x;
+	newNode -> next = NULL;
+	
+	for(int i=0;i<pos-2;i++){
+		temp = temp->next;
+	}
+	
+	newNode -> next = temp -> next;
+	newNode -> prev = temp;
+	
+	temp -> next = newNode;
+	
+	if(newNode-> next !=NULL){
+		newNode -> next -> prev = newNode;
+	}
+	
+}
+
 void print(struct Node* head){
 	while(head != NULL){
 		cout<<(head->data)<<" ";
@@ -53,5 +75,7 @@ int main(){
 	insertAtFront(&head, 3);
 	insertAtEnd(&head, 4);
 	print(head);
+	count<<"\n";
+	insertAtPosition(&head, 5, 2);
 	
 }
