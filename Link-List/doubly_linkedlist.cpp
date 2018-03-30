@@ -59,6 +59,29 @@ void insertAtPosition(struct Node** head, int x, int pos){
 	
 }
 
+void deleteNode(struct Node** head, int x){
+	struct Node *temp, *prev;
+	temp = *head;
+	
+	if(temp != NULL && temp->data == x){
+		(*head) = temp->next;
+		temp -> next -> prev = NULL;
+		free(temp);
+		return;
+	}
+	
+	while(temp != NULL && temp -> data !=x){
+		prev = temp;
+		temp = temp->next;
+	}
+	
+	if(temp == NULL) return;
+	
+	prev -> next = temp -> next;
+	temp -> next -> prev = temp -> prev;
+	free(temp);
+}
+
 void print(struct Node* head){
 	while(head != NULL){
 		cout<<(head->data)<<" ";
@@ -75,7 +98,14 @@ int main(){
 	insertAtFront(&head, 3);
 	insertAtEnd(&head, 4);
 	print(head);
-	count<<"\n";
+	cout<<"\n";
+	
 	insertAtPosition(&head, 5, 2);
+	print(head);
+	cout<<"\n";
+	
+	deleteNode(&head, 5);
+	print(head);
+	cout<<"\n";
 	
 }
